@@ -5,7 +5,7 @@ class Job_Agency_Job {
 	public function __construct( $job_data ) {
 
 		$this->id = $job_data->id;
-		$this->type = $data->type;
+		$this->type = $job_data->type;
 		$this->created_date = strtotime( $job_data->created_date );
 		$this->payload = unserialize( $job_data->payload );
 	}
@@ -13,7 +13,7 @@ class Job_Agency_Job {
 	/**
 	 * Mark the job as started, so now one else will try and start it
 	 */
-	public function start_job() {
+	public function start() {
 		$this->update_status( 'started' );
 	}
 
@@ -26,16 +26,13 @@ class Job_Agency_Job {
 
 		global $wpdb;
 
-		$wpdb->update( array( 
-			'id' => $this->id,
-			'status' => $status
-		));
+		$wpdb->update( Job_Agency::get_table_name(), array( 'status' => $status ), array( 'id' => $this->id ) );
 	}
 
 	/**
 	 * Set the job as completed, good work!
 	 */
-	public function complete_job() {
+	public function complete() {
 
 		global $wpdb;
 
