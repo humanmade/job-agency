@@ -9,7 +9,7 @@ class Job_Agency_CLI_Command extends WP_CLI_Command {
 	 */
 	public function find_work() {
 
-		$worker = Job_Agency_Worker();
+		$worker = new Job_Agency_Worker();
 
 		$worker->start_work();
 	}
