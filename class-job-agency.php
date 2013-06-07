@@ -9,7 +9,7 @@ class Job_Agency {
 
 		global $wpdb;
 
-		$wpdb->query( "CREATE TABLE `" . $this->get_table_name() . "` (
+		$wpdb->query( "CREATE TABLE IF NOT EXISTS`" . self::get_table_name() . "` (
 			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			`type` varchar(300) NOT NULL DEFAULT '',
 			`created_date` datetime NOT NULL,
@@ -17,7 +17,7 @@ class Job_Agency {
 			`status` varchar(300) DEFAULT '',
 			`payload` longtext,
 			PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT") ;
+			) ENGINE=InnoDB") ;
 	}
 
 	/**
