@@ -89,7 +89,7 @@ class Job_Agency {
 		$fire_date = time();
 
 		// allow external sources to hook in here, as they may not have memcached object cache
-		if ( apply_filters( 'job_agency_date_last_fire_date', null, time() ) )
+		if ( apply_filters( 'job_agency_update_last_fire_date', null, time() ) )
 			return;
 
 		global $wp_object_cache;
@@ -101,6 +101,10 @@ class Job_Agency {
 	}
 
 	public static function get_last_fire_date() {
+
+		if ( $time = apply_filters( 'job_agency_get_last_fire_date', null, time() ) !== null)
+			return $time;
+
 		global $wp_object_cache;
 
 		if ( ! method_exists( $wp_object_cache, 'get_mc' ) )
