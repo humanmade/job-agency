@@ -12,7 +12,7 @@ class Job_Agency_Worker {
 
 			$job->start();
 			$job->call_handler();
-			$job->completed();
+			$job->complete();
 
 			if ( $this->is_fired() )
 				return;
