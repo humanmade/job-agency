@@ -37,6 +37,18 @@ class Job_Agency {
 	}
 
 	/**
+	 * Get the amount of not-started jobs
+	 * 
+	 * @return int
+	 */
+	public static function get_jobs_available_count() {
+
+		global $wpdb;
+
+		return (int) $wpdb->get_var( "SELECT count(id) FROM " . self::get_table_name() . " WHERE `status` = ''" );
+	}
+
+	/**
 	 * Get a new job which has not been started
 	 */
 	public static function get_new_job() {
