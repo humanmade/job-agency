@@ -46,9 +46,9 @@ class Job_Agency_Job {
 	public function call_handler() {
 
 		if ( is_callable( $this->type ) )
-			call_user_func( $this->type, $this->payload );
+			call_user_func( $this->type, $this->payload, $this );
 
 		else
-			do_action( 'job_agency_do_job_' . $this->type, $this->payload );
+			do_action( 'job_agency_do_job_' . $this->type, $this->payload, $this );
 	}
 }
