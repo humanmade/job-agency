@@ -18,7 +18,7 @@ class Job_Agency_Job {
 		$this->created_date = strtotime( $job_data->created_date );
 		$this->payload = unserialize( $job_data->payload );
 
-		if ( isset( $job_data->completed_date ) )
+		if ( $job_data->completed_date )
 			$this->completed_date = strtotime( $job_data->completed_date );
 
 		if ( isset( $job_data->result ) )
