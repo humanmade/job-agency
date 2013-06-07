@@ -8,6 +8,7 @@ class Job_Agency_Job {
 		$this->type = $job_data->type;
 		$this->created_date = strtotime( $job_data->created_date );
 		$this->payload = unserialize( $job_data->payload );
+		$this->status = $job_data->status;
 	}
 
 	/**
@@ -25,7 +26,7 @@ class Job_Agency_Job {
 	public function update_status( $status ) {
 
 		global $wpdb;
-
+		$this->status = $status;
 		$wpdb->update( Job_Agency::get_table_name(), array( 'status' => $status ), array( 'id' => $this->id ) );
 	}
 
@@ -35,12 +36,8 @@ class Job_Agency_Job {
 	public function complete() {
 
 		global $wpdb;
-
-		$wpdb->update( array( 
-			'id' => $this->id,
-			'status' => 'completed',
-			'completed_date' => date( 'Y-m-d H:i:s' )
-		));
+		$this->status = 'completed';
+		$wpdb->update( Job_Agency::get_table_name(), array( 'status' => 'completed', 'completed_date' => date( 'Y-m-d H:i:s' ) ), array( 'id' => $this->id ) );
 	}
 
 	/**
