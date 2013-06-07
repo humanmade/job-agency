@@ -105,7 +105,7 @@ class Job_Agency_Job {
 
 		$wpdb->update( array( 
 			'id' => $this->id,
-			'status' => $status,
+			'status' => 'completed',
 			'completed_date' => date( 'Y-m-d H:i:s' )
 		));
 	}
