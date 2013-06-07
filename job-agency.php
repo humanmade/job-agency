@@ -38,3 +38,14 @@ function job_agency_get_job_status( $job_id ) {
 
 	return $job->get_status();	
 }
+
+/**
+ * Get the result of a given job
+ */
+function job_agency_get_job_result( $job_id ) {
+	$job = Job_Agency::get_job( $job_id );
+	if ( ! $job )
+		return '';
+
+	return $job->get_result();
+}

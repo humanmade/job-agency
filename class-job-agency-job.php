@@ -40,6 +40,13 @@ class Job_Agency_Job {
 	}
 
 	/**
+	 * Get the result of a job
+	 */
+	public function get_result() {
+		return $this->result;
+	}
+
+	/**
 	 * Update the status of the job to something
 	 * 
 	 * @param $status $string
