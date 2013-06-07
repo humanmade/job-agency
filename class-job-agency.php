@@ -27,7 +27,7 @@ class Job_Agency {
 	 * @param $payload mixed
 	 * @return int
 	 */
-	public static function queue_job( $type, $payload ) {
+	public static function queue_job( $type, $payload = null ) {
 
 		global $wpdb;
 
