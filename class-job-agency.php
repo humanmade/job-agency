@@ -25,6 +25,7 @@ class Job_Agency {
 	 * 
 	 * @param $type string
 	 * @param $payload mixed
+	 * @return int
 	 */
 	public static function add_job( $type, $payload ) {
 
@@ -34,6 +35,7 @@ class Job_Agency {
 			self::get_table_name(),
 			array( 'type' => $type, 'created_date' => date( 'Y-m-d H:i:s' ), 'payload' => serialize( $payload ) )
 		);
+		return $wpdb->insert_id;
 	}
 
 	/**
