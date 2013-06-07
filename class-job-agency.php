@@ -56,7 +56,7 @@ class Job_Agency {
 	/**
 	 * Get the table name for the job queue
 	 */
-	private static function get_table_name() {
+	public static function get_table_name() {
 
 		global $wpdb;
 		return $wpdb->prefix . 'jobs';
