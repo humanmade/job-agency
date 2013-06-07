@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Plugin Name: HM Job Agency
+ * Plugin Name: Job Agency
  * 
  */
 
-class HM_Job_Agency {
+class Job_Agency {
 
 	/**
 	 * Create the jobs table
@@ -44,9 +44,14 @@ class HM_Job_Agency {
 	 */
 	public static function get_new_job() {
 
-		$wpdb->get_row(
+		$job = $wpdb->get_row(
 			"SELECT * FROM " . $this->get_table_name() . " WHERE status = '' LIMIT 1"
 		);
+
+		if ( ! $job )
+			return null;
+
+		return new Job_Agency_Job( $job );
 	}
 
 	/**
