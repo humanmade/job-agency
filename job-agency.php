@@ -13,3 +13,15 @@ if ( defined( 'WP_CLI' ) && WP_CLI )
 	require_once 'class-job-agency-cli-command.php';
 
 add_action( 'admin_init', array( 'Job_Agency', 'create_table' ) );
+
+add_action( 'init', function() {
+
+
+
+});
+
+function my_job() {
+	
+	echo 'Doing...';
+	sleep( 1 );
+}

@@ -86,10 +86,26 @@ class Job_Agency {
 	 * but will cause that worker to stop after the job is completed
 	 */
 	public static function fire_workers() {
-		// todo set flag as time()
+		$fire_date = time();
+
+		// allow external sources to hook in here, as they may not have memcached object cache
+		if ( apply_filters( 'job_agency_date_last_fire_date', null, time() ) )
+			return;
+
+		global $wp_object_cache;
+
+		if ( ! method_exists( $wp_object_cache, 'get_mc' ) )
+			return false;
+
+		$wp_object_cache->get_mc( 'default' )->set( 'job_agency_last_fire_date', time() );
 	}
 
 	public static function get_last_fire_date() {
-		// todo get flag from somewhere? (memcached eg)
+		global $wp_object_cache;
+
+		if ( ! method_exists( $wp_object_cache, 'get_mc' ) )
+			return false;
+
+		return $wp_object_cache->get_mc( 'default' )->get( 'job_agency_last_fire_date' );
 	}
 }
