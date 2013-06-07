@@ -41,8 +41,10 @@ class Job_Agency {
 	 */
 	public static function get_new_job() {
 
+		global $wpdb;
+
 		$job = $wpdb->get_row(
-			"SELECT * FROM " . self::get_table_name() . " WHERE status = '' LIMIT 1"
+			"SELECT * FROM " . self::get_table_name() . " WHERE `status` IS NULL LIMIT 1"
 		);
 
 		if ( ! $job )
