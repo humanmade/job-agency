@@ -28,9 +28,11 @@ class Job_Agency {
 	 */
 	public static function add_job( $type, $payload ) {
 
+		global $wpdb;
+
 		$wpdb->insert(
-			$this->get_table_name(),
-			array( 'type' => $type, 'created_date' => date( 'Y-m-d H:i:s' ), json_encode( $payload ) ),
+			self::get_table_name(),
+			array( 'type' => $type, 'created_date' => date( 'Y-m-d H:i:s' ), 'payload' => json_encode( $payload ) )
 		);
 	}
 
