@@ -57,6 +57,6 @@ class Job_Agency {
 	private static function get_table_name() {
 
 		global $wpdb;
-		return $wpdb->prefix . '_jobs';
+		return $wpdb->prefix . 'jobs';
 	}
 }
