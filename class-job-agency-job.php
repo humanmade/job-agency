@@ -2,13 +2,27 @@
 
 class Job_Agency_Job {
 
+	private $id = null;
+	private $type = '';
+	private $status = '';
+	private $payload = '';
+	private $created_date = null;
+	private $completed_date = null;
+	private $result = '';
+
 	public function __construct( $job_data ) {
 
 		$this->id = $job_data->id;
 		$this->type = $job_data->type;
+		$this->status = $job_data->status;
 		$this->created_date = strtotime( $job_data->created_date );
 		$this->payload = unserialize( $job_data->payload );
-		$this->status = $job_data->status;
+
+		if ( isset( $job_data->completed_date ) )
+			$this->completed_date = strtotime( $job_data->completed_date );
+
+		if ( isset( $job_data->result ) )
+			$this->result = unserialize( $job_data->result );
 	}
 
 	/**
@@ -19,15 +33,21 @@ class Job_Agency_Job {
 	}
 
 	/**
+	 * Get the status of the job
+	 */
+	public function get_status() {
+		return $this->status;
+	}
+
+	/**
 	 * Update the status of the job to something
 	 * 
 	 * @param $status $string
 	 */
 	public function update_status( $status ) {
 
-		global $wpdb;
 		$this->status = $status;
-		$wpdb->update( Job_Agency::get_table_name(), array( 'status' => $status ), array( 'id' => $this->id ) );
+		$this->save();
 	}
 
 	/**
@@ -35,9 +55,30 @@ class Job_Agency_Job {
 	 */
 	public function complete() {
 
+		if ( is_wp_error( $this->result ) )
+			$this->status = 'errored';
+		else
+			$this->status = 'completed';
+
+		$this->completed_date = time();
+		$this->save();
+	}
+
+	/**
+	 * Save the current job state to the database
+	 */
+	public function save() {
 		global $wpdb;
-		$this->status = 'completed';
-		$wpdb->update( Job_Agency::get_table_name(), array( 'status' => 'completed', 'completed_date' => date( 'Y-m-d H:i:s' ) ), array( 'id' => $this->id ) );
+
+		return (bool)$wpdb->update( Job_Agency::get_table_name(),
+			array(
+				'type'              => $this->type,
+				'status'            => $this->status,
+				'created_date'      => date( 'Y-m-d H:i:s', $this->created_date ),
+				'completed_date'    => date( 'Y-m-d H:i:s', $this->completed_date ),
+				'payload'           => serialize( $this->payload ),
+				'result'            => serialize( $this->result ),
+			), array( 'id' => $this->id ) );
 	}
 
 	/**
@@ -46,8 +87,7 @@ class Job_Agency_Job {
 	public function call_handler() {
 
 		if ( is_callable( $this->type ) )
-			call_user_func( $this->type, $this->payload, $this );
-
+			$this->result = call_user_func( $this->type, $this->payload );
 		else
 			do_action( 'job_agency_do_job_' . $this->type, $this->payload, $this );
 	}

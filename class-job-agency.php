@@ -16,6 +16,7 @@ class Job_Agency {
 			`completed_date` datetime DEFAULT NULL,
 			`status` varchar(300) DEFAULT '',
 			`payload` longtext,
+			`result` longtext,
 			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB") ;
 	}
