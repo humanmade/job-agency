@@ -27,13 +27,18 @@ class Job_Agency {
 	 * @param $payload mixed
 	 * @return int
 	 */
-	public static function add_job( $type, $payload ) {
+	public static function queue_job( $type, $payload ) {
 
 		global $wpdb;
 
 		$wpdb->insert(
 			self::get_table_name(),
-			array( 'type' => $type, 'created_date' => date( 'Y-m-d H:i:s' ), 'payload' => serialize( $payload ) )
+			array( 
+				'type' => $type,
+				'status' => 'queued',
+				'created_date' => date( 'Y-m-d H:i:s' ),
+				'payload' => serialize( $payload )
+				)
 		);
 		return $wpdb->insert_id;
 	}
@@ -43,11 +48,11 @@ class Job_Agency {
 	 * 
 	 * @return int
 	 */
-	public static function get_jobs_available_count() {
+	public static function get_jobs_queued_count() {
 
 		global $wpdb;
 
-		return (int) $wpdb->get_var( "SELECT count(id) FROM " . self::get_table_name() . " WHERE `status` = ''" );
+		return (int) $wpdb->get_var( "SELECT count(id) FROM " . self::get_table_name() . " WHERE `status` = 'queued'" );
 	}
 
 	/**
@@ -58,7 +63,7 @@ class Job_Agency {
 		global $wpdb;
 
 		$job = $wpdb->get_row(
-			"SELECT * FROM " . self::get_table_name() . " WHERE `status` = '' LIMIT 1"
+			"SELECT * FROM " . self::get_table_name() . " WHERE `status` = 'queued' LIMIT 1"
 		);
 
 		if ( ! $job )

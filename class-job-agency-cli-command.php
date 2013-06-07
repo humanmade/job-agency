@@ -21,7 +21,7 @@ class Job_Agency_CLI_Command extends WP_CLI_Command {
 	 */
 	public function check_employment_needs() {
 
-		WP_CLI::line( Job_Agency::get_jobs_available_count() );
+		WP_CLI::line( Job_Agency::get_jobs_queued_count() );
 	}
 
 	/**
