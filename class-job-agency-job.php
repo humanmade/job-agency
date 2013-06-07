@@ -7,7 +7,7 @@ class Job_Agency_Job {
 		$this->id = $job_data->id;
 		$this->type = $data->type;
 		$this->created_date = strtotime( $job_data->created_date );
-		$this->payload = json_decode( $job_data->payload );
+		$this->payload = unserialize( $job_data->payload );
 	}
 
 	/**

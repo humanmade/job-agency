@@ -32,7 +32,7 @@ class Job_Agency {
 
 		$wpdb->insert(
 			self::get_table_name(),
-			array( 'type' => $type, 'created_date' => date( 'Y-m-d H:i:s' ), 'payload' => json_encode( $payload ) )
+			array( 'type' => $type, 'created_date' => date( 'Y-m-d H:i:s' ), 'payload' => serialize( $payload ) )
 		);
 	}
 
