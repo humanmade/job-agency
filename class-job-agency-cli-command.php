@@ -23,6 +23,17 @@ class Job_Agency_CLI_Command extends WP_CLI_Command {
 
 		WP_CLI::line( Job_Agency::get_jobs_available_count() );
 	}
+
+	/**
+	 * Fire all currently working workers
+	 * 
+	 * @subcommand fire-workers
+	 */
+	public function fire_workers() {
+
+		Job_Agency::fire_workers();
+		WP_CLI::success( 'Workers have been fired, they will exit once they have finished their current jobs.' );
+	}
 }
 
 WP_CLI::add_command( 'job-agency', 'Job_Agency_CLI_Command' );
