@@ -57,6 +57,27 @@ class Job_Agency {
 	}
 
 	/**
+	 * Get a job based on its ID
+	 * 
+	 * @param int 
+	 * @return object|null
+	 */
+	public static function get_job( $job_id ) {
+		global $wpdb;
+
+		$job = $wpdb->get_row( $wpdb->prepare(
+			"SELECT * FROM " . self::get_table_name() . " WHERE `id` = %d",
+			$job_id
+			)
+		);
+
+		if ( ! $job )
+			return null;
+
+		return new Job_Agency_Job( $job );
+	}
+
+	/**
 	 * Get a new job which has not been started
 	 */
 	public static function get_new_job() {

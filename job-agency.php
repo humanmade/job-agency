@@ -14,14 +14,27 @@ if ( defined( 'WP_CLI' ) && WP_CLI )
 
 add_action( 'admin_init', array( 'Job_Agency', 'create_table' ) );
 
-add_action( 'init', function() {
+/**
+ * Queue a job for the Job Agency to complete
+ *
+ * @param string $type
+ * @param mixed $payload
+ * @return int $job_id
+ */
+function job_agency_queue_job( $type, $payload ) {
+	return Job_Agency::queue_job( $type, $payload );
+}
 
+/**
+ * Get the job status for a given job
+ * 
+ * @param int
+ * @return string
+ */
+function job_agency_get_job_status( $job_id ) {
+	$job = Job_Agency::get_job( $job_id );
+	if ( ! $job )
+		return '';
 
-
-});
-
-function my_job() {
-	
-	echo 'Doing...';
-	sleep( 1 );
+	return $job->get_status();	
 }
