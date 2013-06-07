@@ -14,7 +14,7 @@ class Job_Agency {
 			`type` varchar(300) NOT NULL DEFAULT '',
 			`created_date` datetime NOT NULL,
 			`completed_date` datetime DEFAULT NULL,
-			`status` varchar(300) DEFAULT NULL,
+			`status` varchar(300) DEFAULT '',
 			`payload` longtext,
 			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT") ;
@@ -44,7 +44,7 @@ class Job_Agency {
 		global $wpdb;
 
 		$job = $wpdb->get_row(
-			"SELECT * FROM " . self::get_table_name() . " WHERE `status` IS NULL LIMIT 1"
+			"SELECT * FROM " . self::get_table_name() . " WHERE `status` = '' LIMIT 1"
 		);
 
 		if ( ! $job )
