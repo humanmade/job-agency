@@ -75,9 +75,9 @@ class Job_Agency_Job {
 				'type'              => $this->type,
 				'status'            => $this->status,
 				'created_date'      => date( 'Y-m-d H:i:s', $this->created_date ),
-				'completed_date'    => date( 'Y-m-d H:i:s', $this->completed_date ),
+				'completed_date'    => $this->completed_date ? date( 'Y-m-d H:i:s', $this->completed_date ) : null,
 				'payload'           => serialize( $this->payload ),
-				'result'            => serialize( $this->result ),
+				'result'            => $this->result === null ? '' : serialize( $this->result ),
 			), array( 'id' => $this->id ) );
 	}
 
