@@ -73,4 +73,16 @@ class Job_Agency {
 		global $wpdb;
 		return $wpdb->prefix . 'jobs';
 	}
+
+	/**
+	 * Stop all the current workers on jobs, this won't interrupt a worker which it is doing a job
+	 * but will cause that worker to stop after the job is completed
+	 */
+	public static function fire_workers() {
+		// todo set flag as time()
+	}
+
+	public static function get_last_fire_date() {
+		// todo get flag from somewhere? (memcached eg)
+	}
 }
