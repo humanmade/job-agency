@@ -122,6 +122,17 @@ class Job_Agency {
 		$wp_object_cache->get_mc( 'default' )->set( 'job_agency_last_fire_date', time() );
 	}
 
+	/**
+	 * Cancel open jobs.
+	 * 
+	 * @todo support for canceling specific types of jobs
+	 */
+	public static function cancel_jobs() {
+		global $wpdb;
+
+		return $wpdb->update( self::get_table_name(), array( 'status' => 'canceled' ), array( 'status' => 'queued' ) );
+	} 
+
 	public static function get_last_fire_date() {
 
 		if ( $time = apply_filters( 'job_agency_get_last_fire_date', null, time() ) !== null)
