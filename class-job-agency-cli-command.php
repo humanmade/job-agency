@@ -34,6 +34,17 @@ class Job_Agency_CLI_Command extends WP_CLI_Command {
 		Job_Agency::fire_workers();
 		WP_CLI::success( 'Workers have been fired, they will exit once they have finished their current jobs.' );
 	}
+
+	/**
+	 * Cancel all jobs
+	 * 
+	 * @subcommand cancel-jobs
+	 */
+	public function cancel_jobs() {
+
+		$jobs = Job_Agency::cancel_jobs();
+		WP_CLI::success( sprintf( "All %d open jobs were canceled.", $jobs ) );
+	}
 }
 
 WP_CLI::add_command( 'job-agency', 'Job_Agency_CLI_Command' );
