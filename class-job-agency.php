@@ -130,7 +130,14 @@ class Job_Agency {
 	public static function cancel_jobs() {
 		global $wpdb;
 
-		return $wpdb->update( self::get_table_name(), array( 'status' => 'canceled' ), array( 'status' => 'queued' ) );
+		return $wpdb->update(
+			self::get_table_name(),
+			array(
+				'status'         => 'canceled',
+				'completed_date' => date( 'Y-m-d H:i:s' ),
+			),
+			array( 'status' => 'queued' )
+		);
 	} 
 
 	public static function get_last_fire_date() {
