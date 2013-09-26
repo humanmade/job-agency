@@ -120,7 +120,7 @@ class Job_Agency {
 		global $wpdb;
 
 		$job = $wpdb->get_row(
-			$wpdb->prepare( "SELECT * FROM " . self::get_table_name() . " WHERE `status` = 'queued' AND `execution_date` >= %s LIMIT 1",
+			$wpdb->prepare( "SELECT * FROM " . self::get_table_name() . " WHERE `status` = 'queued' AND `execution_date` <= %s LIMIT 1",
 				date( 'Y-m-d H:i:s' )
 			)
 		);
