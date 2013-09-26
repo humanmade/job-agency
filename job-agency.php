@@ -44,7 +44,7 @@ function job_agency_queue_deferred_job( $type, $payload, $when ) {
  * @return int
  */
 function job_agency_get_queued_jobs_count( $job_type ) {
-	Job_Agency::get_queued_jobs_count( $job_type );
+	Job_Agency::get_jobs_queued_count( $job_type );
 }
 
 /**
