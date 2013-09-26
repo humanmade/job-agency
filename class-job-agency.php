@@ -84,7 +84,7 @@ class Job_Agency {
 		global $wpdb;
 
 		if ( $job_type )
-			(int) $wpdb->get_var( $wpdb->prepare( "SELECT count(id) FROM " . self::get_table_name() . " WHERE `status` = 'queued' AND `type` = %s ", $job_type ) );
+			return (int) $wpdb->get_var( $wpdb->prepare( "SELECT count(id) FROM " . self::get_table_name() . " WHERE `status` = 'queued' AND `type` = %s ", $job_type ) );
 		else
 			return (int) $wpdb->get_var( "SELECT count(id) FROM " . self::get_table_name() . " WHERE `status` = 'queued'" );
 	}
