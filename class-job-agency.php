@@ -55,7 +55,9 @@ class Job_Agency {
 	 */
 	public static function queue_deferred_job( $type, $payload = null, $when = null ) {
 
-		if ( is_null( $when ) )
+		if ( is_int( $when ) )
+			$when = date( 'Y-m-d H:i:s', $when );
+		else if ( is_null( $when ) )
 			$when = date( 'Y-m-d H:i:s' );
 
 		global $wpdb;
