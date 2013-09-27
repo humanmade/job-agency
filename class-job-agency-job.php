@@ -96,6 +96,6 @@ class Job_Agency_Job {
 		if ( is_callable( $this->type ) )
 			$this->result = call_user_func( $this->type, $this->payload );
 		else
-			do_action( 'job_agency_do_job_' . $this->type, $this->payload, $this );
+			$this->result = apply_filters( 'job_agency_do_job_' . $this->type, $this->payload, $this );
 	}
 }
