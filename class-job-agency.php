@@ -13,6 +13,7 @@ class Job_Agency {
 			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			`type` varchar(300) NOT NULL DEFAULT '',
 			`created_date` datetime NOT NULL,
+			`execution_date` datetime DEFAULT NULL,
 			`completed_date` datetime DEFAULT NULL,
 			`status` varchar(300) DEFAULT '',
 			`payload` longtext,
