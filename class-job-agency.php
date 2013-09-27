@@ -13,6 +13,7 @@ class Job_Agency {
 			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			`type` varchar(300) NOT NULL DEFAULT '',
 			`created_date` datetime NOT NULL,
+			`execution_date` datetime DEFAULT NULL,
 			`completed_date` datetime DEFAULT NULL,
 			`status` varchar(300) DEFAULT '',
 			`payload` longtext,
@@ -38,6 +39,37 @@ class Job_Agency {
 				'type' => $type,
 				'status' => 'queued',
 				'created_date' => date( 'Y-m-d H:i:s' ),
+				'execution_date' => date( 'Y-m-d H:i:s' ),
+				'payload' => serialize( $payload )
+				)
+		);
+		return $wpdb->insert_id;
+	}
+
+	/**
+	 * Add a new deferred job to the job queue
+	 * 
+	 * @param string $type
+	 * @param mixed $payload
+	 * @param string $when
+	 * @return int
+	 */
+	public static function queue_deferred_job( $type, $payload = null, $when = null ) {
+
+		if ( is_int( $when ) )
+			$when = date( 'Y-m-d H:i:s', $when );
+		else if ( is_null( $when ) )
+			$when = date( 'Y-m-d H:i:s' );
+
+		global $wpdb;
+
+		$wpdb->insert(
+			self::get_table_name(),
+			array( 
+				'type' => $type,
+				'status' => 'queued',
+				'created_date' => date( 'Y-m-d H:i:s' ),
+				'execution_date' => date( 'Y-m-d H:i:s', strtotime( $when ) ),
 				'payload' => serialize( $payload )
 				)
 		);
@@ -47,13 +79,17 @@ class Job_Agency {
 	/**
 	 * Get the amount of not-started jobs
 	 * 
+	 * @param string $job_type
 	 * @return int
 	 */
-	public static function get_jobs_queued_count() {
+	public static function get_jobs_queued_count( $job_type = '' ) {
 
 		global $wpdb;
 
-		return (int) $wpdb->get_var( "SELECT count(id) FROM " . self::get_table_name() . " WHERE `status` = 'queued'" );
+		if ( $job_type )
+			return (int) $wpdb->get_var( $wpdb->prepare( "SELECT count(id) FROM " . self::get_table_name() . " WHERE `status` = 'queued' AND `type` = %s ", $job_type ) );
+		else
+			return (int) $wpdb->get_var( "SELECT count(id) FROM " . self::get_table_name() . " WHERE `status` = 'queued'" );
 	}
 
 	/**
@@ -85,7 +121,9 @@ class Job_Agency {
 		global $wpdb;
 
 		$job = $wpdb->get_row(
-			"SELECT * FROM " . self::get_table_name() . " WHERE `status` = 'queued' LIMIT 1"
+			$wpdb->prepare( "SELECT * FROM " . self::get_table_name() . " WHERE `status` = 'queued' AND `execution_date` <= %s LIMIT 1",
+				date( 'Y-m-d H:i:s' )
+			)
 		);
 
 		if ( ! $job )
