@@ -6,6 +6,9 @@ class Job_Agency_Worker {
 
 	public function start_work() {
 
+		if ( ! defined( 'JOB_AGENCY_JOB' ) )
+			define( 'JOB_AGENCY_JOB', true );
+		
 		$this->date_started_work = time();
 
 		while( $job = Job_Agency::get_new_job() ) {
