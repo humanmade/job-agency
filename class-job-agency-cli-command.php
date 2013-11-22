@@ -14,6 +14,8 @@ class Job_Agency_CLI_Command extends WP_CLI_Command {
 		$worker = new Job_Agency_Worker();
 
 		$worker->start_work();
+
+		WP_CLI::line( sprintf( "[%s] Worker %d completed its work.", date( 'Y-m-d H:i:s' ), getmypid() ) );
 	}
 
 	/**
