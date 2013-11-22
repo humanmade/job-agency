@@ -26,6 +26,13 @@ class Job_Agency_Job {
 	}
 
 	/**
+	 * Get the ID for the job
+	 */
+	public function get_id() {
+		return $this->id;
+	}
+
+	/**
 	 * Mark the job as started, so now one else will try and start it
 	 */
 	public function start() {
@@ -55,6 +62,7 @@ class Job_Agency_Job {
 
 		$this->status = $status;
 		$this->save();
+		do_action( 'job_agency_job_updated_status', $status, $this );
 	}
 
 	/**
@@ -69,6 +77,7 @@ class Job_Agency_Job {
 
 		$this->completed_date = time();
 		$this->save();
+		do_action( 'job_agency_job_updated_status', $this->status, $this );
 	}
 
 	/**

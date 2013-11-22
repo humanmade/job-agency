@@ -71,3 +71,13 @@ function job_agency_get_job_result( $job_id ) {
 
 	return $job->get_result();
 }
+
+/**
+ * Permit workers to be more verbal
+ */
+if ( defined( 'WP_CLI' ) && WP_CLI )
+	add_action( 'job_agency_job_updated_status', 'job_agency_report_cli_worker_status', 10, 2 );
+function job_agency_report_cli_worker_status( $status, $job ) {
+
+	WP_CLI::line( sprintf( "[%s] Worker %d marked job %d as '%s'", date( 'Y-m-d H:i:s' ), getmypid(), $job->get_id(), $status ) );
+}
