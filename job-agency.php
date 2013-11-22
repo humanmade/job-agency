@@ -79,5 +79,5 @@ if ( defined( 'WP_CLI' ) && WP_CLI )
 	add_action( 'job_agency_job_updated_status', 'job_agency_report_cli_worker_status', 10, 2 );
 function job_agency_report_cli_worker_status( $status, $job ) {
 
-	WP_CLI::line( sprintf( "[%s] Worker %d marked job %d as '%s'", date( 'Y-m-d H:i:s' ), getmypid(), $job->get_id(), $status ) );
+	WP_CLI::line( sprintf( "[%s] Worker %d marked job %d of type %s as '%s'", date( 'Y-m-d H:i:s' ), getmypid(), $job->get_id(), $job->get_type(), $status ) );
 }

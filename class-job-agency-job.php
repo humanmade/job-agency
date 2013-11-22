@@ -33,6 +33,13 @@ class Job_Agency_Job {
 	}
 
 	/**
+	 * Get the type for the job
+	 */
+	public function get_type() {
+		return $this->type;
+	}
+
+	/**
 	 * Mark the job as started, so now one else will try and start it
 	 */
 	public function start() {
