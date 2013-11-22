@@ -5,15 +5,15 @@ class Job_Agency_CLI_Command extends WP_CLI_Command {
 	/**
 	 * Find work for this process, will make this process now block
 	 * 
-	 * @subcommand find-work
+	 * @subcommand find-work [--max_jobs=<max-jobs>]
 	 */
-	public function find_work() {
+	public function find_work( $args, $assoc_args ) {
 
 		WP_CLI::line( sprintf( "[%s] Worker %d started looking for work.", date( 'Y-m-d H:i:s' ), getmypid() ) );
 
 		$worker = new Job_Agency_Worker();
 
-		$worker->start_work();
+		$worker->start_work( $assoc_args );
 
 		WP_CLI::line( sprintf( "[%s] Worker %d completed its work.", date( 'Y-m-d H:i:s' ), getmypid() ) );
 	}
