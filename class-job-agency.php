@@ -120,16 +120,25 @@ class Job_Agency {
 
 		global $wpdb;
 
+		@mysql_query( "BEGIN", $wpdb->dbh );
+
 		$job = $wpdb->get_row(
-			$wpdb->prepare( "SELECT * FROM " . self::get_table_name() . " WHERE `status` = 'queued' AND `execution_date` <= %s LIMIT 1",
+			$wpdb->prepare( "SELECT * FROM " . self::get_table_name() . " WHERE `status` = 'queued' AND `execution_date` <= %s LIMIT 1 FOR UPDATE",
 				date( 'Y-m-d H:i:s' )
 			)
 		);
 
-		if ( ! $job )
+		if ( ! $job ) {
+			@mysql_query( "COMMIT", $wpdb->dbh );
 			return null;
+		}
 
-		return new Job_Agency_Job( $job );
+		$job = new Job_Agency_Job( $job );
+		$job->start();
+
+		@mysql_query( "COMMIT", $wpdb->dbh );
+
+		return $job;
 	}
 
 	/**
