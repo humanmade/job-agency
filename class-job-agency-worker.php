@@ -17,7 +17,6 @@ class Job_Agency_Worker {
 
 			$job_count++;
 
-			$job->start();
 			$job->call_handler();
 			$job->complete();
 
