@@ -11,6 +11,11 @@ class Job_Agency_CLI_Command extends WP_CLI_Command {
 
 		WP_CLI::line( sprintf( "[%s] Worker %d started looking for work.", date( 'Y-m-d H:i:s' ), getmypid() ) );
 
+		$defaults = array(
+			'max_jobs'      => JOB_AGENCY_WORKER_MAX_JOBS,
+			);
+		$assoc_args = array_merge( $defaults, $assoc_args );
+
 		$worker = new Job_Agency_Worker();
 
 		$worker->start_work( $assoc_args );

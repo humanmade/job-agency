@@ -9,6 +9,9 @@ require_once 'class-job-agency.php';
 require_once 'class-job-agency-job.php';
 require_once 'class-job-agency-worker.php';
 
+if ( ! defined( 'JOB_AGENCY_WORKER_MAX_JOBS' ) )
+	define( 'JOB_AGENCY_WORKER_MAX_JOBS', 20 );
+
 if ( defined( 'WP_CLI' ) && WP_CLI )
 	require_once 'class-job-agency-cli-command.php';
 
