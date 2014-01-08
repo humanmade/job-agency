@@ -18,7 +18,9 @@ class Job_Agency {
 			`status` varchar(300) DEFAULT '',
 			`payload` longtext,
 			`result` longtext,
-			PRIMARY KEY (`id`)
+			PRIMARY KEY (`id`),
+			KEY `type` (`type`),
+			KEY `status` (`status`)
 			) ENGINE=InnoDB") ;
 	}
 
