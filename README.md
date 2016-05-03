@@ -1,3 +1,5 @@
+_*This project is unmaintainted. We recommend you checkout [Cavalcade](https://github.com/humanmade/cavalcade).*_
+
 hm-job-agency
 =============
 
